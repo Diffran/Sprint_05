@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Get All Branches</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            margin: 10px;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: center;
+        }
+        a {
+            padding: 5px 10 px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 class="thead-dark">Branches List</h1>
+        <a class="btn btn-outline-primary" th:href="@{/branch/add}">
+            Add new Branch
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="branch :${BranchList}">
+                <td th:text="${branch.pk_BranchID}"></td>
+                <td th:text="${branch.branchName}"></td>
+                <td th:text="${branch.branchCountry}"></td>
+                <td th:text="${branch.branchType}"></td>
+                <td class="btn-container">
+                    <a class="btn btn-outline-danger" th:href="@{/branch/delete/' + ${branch.pk_BranchID}}">
+                        Delete
+                    </a>
+                    <a class="btn btn-outline-primary" th:href="@{/branch/update/' + ${branch.pk_BranchID}}">
+                        Update
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Incluir Bootstrap JS y dependencias de jQuery y Popper.js para funcionalidades avanzadas -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
+        integrity="sha384-QItB/JxkECLTTFkPwkr2jsjzVtkfOIen9Wrw9p7TjsCJIS+3xJ0Ugy+R62vJzS4N"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>

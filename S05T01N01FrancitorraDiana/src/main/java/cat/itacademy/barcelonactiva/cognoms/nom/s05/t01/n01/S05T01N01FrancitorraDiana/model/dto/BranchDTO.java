@@ -4,7 +4,7 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01Francitorr
 import java.util.Arrays;
 import java.util.List;
 
-public class SucursalDTO {
+public class BranchDTO {
 
 
     private Integer pk_BranchID;
@@ -19,16 +19,16 @@ public class SucursalDTO {
             "Slovenia", "Spain", "Sweden"
     );
 
-    public SucursalDTO() {
+    public BranchDTO() {
     }
 
-    public SucursalDTO(String branchName, String branchCountry) {
+    public BranchDTO(String branchName, String branchCountry) {
         this.branchName = branchName;
         this.branchCountry = branchCountry;
         setBranchType(this.branchCountry);
     }
 
-    public SucursalDTO(Integer pk_SucursalID, String branchName, String branchCountry) {
+    public BranchDTO(Integer pk_SucursalID, String branchName, String branchCountry) {
         this.pk_BranchID = pk_SucursalID;
         this.branchName = branchName;
         this.branchCountry = branchCountry;
@@ -70,7 +70,7 @@ public class SucursalDTO {
 
     @Override
     public String toString() {
-        return "SucursalDTO{" +
+        return "BranchDTO{" +
                 "pk_BranchID=" + pk_BranchID +
                 ", branchName='" + branchName + '\'' +
                 ", branchCountry='" + branchCountry + '\'' +

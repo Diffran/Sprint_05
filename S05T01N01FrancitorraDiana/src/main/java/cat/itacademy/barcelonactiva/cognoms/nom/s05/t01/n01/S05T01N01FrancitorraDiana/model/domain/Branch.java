@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Sucursal {
+public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk_BranchID;
@@ -13,15 +13,15 @@ public class Sucursal {
     @Column(name = "country")
     private String branchCountry;
 
-    public Sucursal() {
+    public Branch() {
     }
 
-    public Sucursal(String branchName, String branchCountry) {
+    public Branch(String branchName, String branchCountry) {
         this.branchName = branchName;
         this.branchCountry = branchCountry;
     }
 
-    public Sucursal(Integer pk_BranchID, String branchName, String branchCountry) {
+    public Branch(Integer pk_BranchID, String branchName, String branchCountry) {
         this.pk_BranchID = pk_BranchID;
         this.branchName = branchName;
         this.branchCountry = branchCountry;
@@ -49,5 +49,14 @@ public class Sucursal {
 
     public void setBranchCountry(String branchCountry) {
         this.branchCountry = branchCountry;
+    }
+
+    @Override
+    public String toString() {
+        return "Branch{" +
+                "pk_BranchID=" + pk_BranchID +
+                ", branchName='" + branchName + '\'' +
+                ", branchCountry='" + branchCountry + '\'' +
+                '}';
     }
 }
