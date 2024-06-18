@@ -5,11 +5,13 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01Francitorra
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.repository.ISucursalRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SucursalService {
+public class SucursalService implements ICRUDSucursal{
     private ISucursalRepository sucursalRepository;
 
     @Autowired
@@ -17,63 +19,62 @@ public class SucursalService {
         this.sucursalRepository=sucursalRepository;
     }
 
-    public SucursalDTO createSucursal(SucursalDTO sucursalDTO) throws EntityExistsException{
+    private Sucursal toEntity(SucursalDTO sucursalDTO){
+        if(sucursalDTO.getPk_BranchID()==null){
+            return new Sucursal(sucursalDTO.getBranchName(), sucursalDTO.getBranchCountry());
+        }
+        return new Sucursal(sucursalDTO.getPk_BranchID(), sucursalDTO.getBranchName(), sucursalDTO.getBranchCountry());
+    }
+    private SucursalDTO toDTO(Sucursal sucursal){
+        return  new SucursalDTO(sucursal.getPk_BranchID(), sucursal.getBranchName(), sucursal.getBranchCountry());
+    }
 
-        if(sucursalRepository.findById(sucursalDTO.getPk_SucursalID()).isPresent()){
-            throw new EntityExistsException("Create Sucursal failed: Invalid ID number: "+ sucursalDTO.getPk_SucursalID()+
+    @Override
+    public void create(SucursalDTO sucursalDTO) throws EntityExistsException{
+        if(sucursalRepository.findById(sucursalDTO.getPk_BranchID()).isPresent()){
+            throw new EntityExistsException("Create Sucursal failed: Invalid ID number: "+ sucursalDTO.getPk_BranchID()+
                     " ALREADY EXIST in database");
         }
 
-        //convertir aixo a metode toEntity i toDTO, crec que no cal que retorni DTO al ser tHymenoseque...
-        //crear
-        Sucursal sucursal = new Sucursal();
-        sucursal.setPk_SucursalID(sucursalDTO.getPk_SucursalID());
-        sucursal.setNomSucursal(sucursalDTO.getNomSucursal());
-        sucursal.setPaisSucursal(sucursalDTO.getPaisSucursal());
-        sucursalRepository.save(sucursal);
-
-        return sucursalDTO;
+        sucursalRepository.save(toEntity(sucursalDTO));
     }
 
-    public SucursalDTO updateSucursal(SucursalDTO sucursalDTO) throws EntityNotFoundException{
-        if(!sucursalRepository.findById(sucursalDTO.getPk_SucursalID()).isPresent()){
-            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ sucursalDTO.getPk_SucursalID()+
+    @Override
+    public void update(SucursalDTO sucursalDTO) throws EntityNotFoundException{
+        if(!sucursalRepository.findById(sucursalDTO.getPk_BranchID()).isPresent()){
+            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ sucursalDTO.getPk_BranchID()+
                     " -> DOESN'T EXIST in DataBase");
         }
 
-        Sucursal sucursal = new Sucursal();
-        sucursal.setPk_SucursalID(sucursalDTO.getPk_SucursalID());
-        sucursal.setNomSucursal(sucursalDTO.getNomSucursal());
-        sucursal.setPaisSucursal(sucursalDTO.getPaisSucursal());
-        sucursalRepository.save(sucursal);
-
-        return sucursalDTO;
+        sucursalRepository.save(toEntity(sucursalDTO));
     }
 
-    public void deleteFruit(Integer sucursalID) throws EntityNotFoundException{
-        if(!sucursalRepository.findById(sucursalID).isPresent()){
-            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ sucursalID+
+    @Override
+    public void delete(Integer branchId) throws EntityNotFoundException{
+        if(!sucursalRepository.findById(branchId).isPresent()){
+            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ branchId+
                     " -> DOESN'T EXIST in DataBase");
         }
 
-        sucursalRepository.deleteById(sucursalID);
+        sucursalRepository.deleteById(branchId);
     }
 
-    public SucursalDTO getOneSucursal(Integer sucursalID) throws  EntityNotFoundException{
-        Sucursal sucursal=sucursalRepository.findById(sucursalID)
-                .orElseThrow(() -> new EntityNotFoundException("Get One Sucursal Failed: Invalid ID: "+ sucursalID
+    @Override
+    public SucursalDTO getOne(Integer branchId) throws  EntityNotFoundException{
+        Sucursal branch =sucursalRepository.findById(branchId)
+                .orElseThrow(() -> new NoResultException("Get One Sucursal Failed: Invalid ID: "+ branchId
                         +" -> DOESN'T EXIST in DataBase"));
 
-        SucursalDTO sucursalDTO = new SucursalDTO();
-        sucursalDTO.setPk_SucursalID(sucursal.getPk_SucursalID());
-        sucursalDTO.setNomSucursal(sucursal.getNomSucursal());
-        sucursalDTO.setPaisSucursal(sucursal.getPaisSucursal());
-
-        return  sucursalDTO;
+        return toDTO(branch);
     }
 
-    public List<SucursalDTO> getAllSucursals(){
+    @Override
+    public List<SucursalDTO> getAll(){
+        List<Sucursal> branchList = sucursalRepository.findAll();
 
+        return branchList.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
 }

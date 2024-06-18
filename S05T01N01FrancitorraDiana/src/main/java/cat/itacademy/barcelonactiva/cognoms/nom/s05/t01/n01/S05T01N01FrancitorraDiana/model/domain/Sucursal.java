@@ -6,50 +6,48 @@ import jakarta.persistence.*;
 @Table
 public class Sucursal {
     @Id
-    private Integer pk_SucursalID;
-    @Column
-    private String nomSucursal;
-    @Column
-    private String paisSucursal;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer pk_BranchID;
+    @Column(name = "name")
+    private String branchName;
+    @Column(name = "country")
+    private String branchCountry;
 
     public Sucursal() {
     }
 
-    public Sucursal(String nomSucursal, String paisSucursal) {
-        this.nomSucursal = nomSucursal;
-        this.paisSucursal = paisSucursal;
+    public Sucursal(String branchName, String branchCountry) {
+        this.branchName = branchName;
+        this.branchCountry = branchCountry;
     }
 
-    public Integer getPk_SucursalID() {
-        return pk_SucursalID;
+    public Sucursal(Integer pk_BranchID, String branchName, String branchCountry) {
+        this.pk_BranchID = pk_BranchID;
+        this.branchName = branchName;
+        this.branchCountry = branchCountry;
     }
 
-    public void setPk_SucursalID(Integer pk_SucursalID) {
-        this.pk_SucursalID = pk_SucursalID;
+    public Integer getPk_BranchID() {
+        return pk_BranchID;
     }
 
-    public String getNomSucursal() {
-        return nomSucursal;
+    public void setPk_BranchID(Integer pk_BranchID) {
+        this.pk_BranchID = pk_BranchID;
     }
 
-    public void setNomSucursal(String nomSucursal) {
-        this.nomSucursal = nomSucursal;
+    public String getBranchName() {
+        return branchName;
     }
 
-    public String getPaisSucursal() {
-        return paisSucursal;
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
-    public void setPaisSucursal(String paisSucursal) {
-        this.paisSucursal = paisSucursal;
+    public String getBranchCountry() {
+        return branchCountry;
     }
 
-    @Override
-    public String toString() {
-        return "Sucursal{" +
-                "pk_SucursalID=" + pk_SucursalID +
-                ", nomSucursal='" + nomSucursal + '\'' +
-                ", paisSucursal='" + paisSucursal + '\'' +
-                '}';
+    public void setBranchCountry(String branchCountry) {
+        this.branchCountry = branchCountry;
     }
 }
