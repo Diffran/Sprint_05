@@ -2,10 +2,13 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01Francitorr
 
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.dto.BranchDTO;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.services.impl.BranchServiceImpl;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.util.Countries;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("branch")
@@ -23,6 +26,10 @@ public class BranchController {
     public String showAddBranchForm(Model model){
         BranchDTO branchDTO = new BranchDTO();
         model.addAttribute("newBranch",branchDTO);
+
+        List<String> countries = Countries.getAllCountries();
+        model.addAttribute("countries", countries);
+
         return "form";
     }
 

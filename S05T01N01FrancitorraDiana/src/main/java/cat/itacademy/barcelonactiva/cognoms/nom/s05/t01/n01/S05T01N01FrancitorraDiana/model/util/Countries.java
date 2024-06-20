@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 public class Countries {
     public static List<String> getAllCountries() {
-        // Lista de todos los países del mundo (puedes encontrar esta lista en recursos como ISO 3166)
         return Arrays.asList(
                 "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
                 "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
