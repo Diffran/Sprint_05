@@ -5,8 +5,7 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01Francitorra
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("branch")
@@ -14,17 +13,30 @@ public class BranchController {
     @Autowired
     private BranchServiceImpl branchService;
 
-    @GetMapping("/getAll")
+    @GetMapping({"/getAll","/home",""})
     public String getAllBranches(Model model){
         model.addAttribute("BranchList", branchService.getAll());
         return "index";
     }
 
-    @GetMapping("/add")
-    public String addBranch(Model model){
+    @GetMapping("/form")
+    public String showAddBranchForm(Model model){
         BranchDTO branch = new BranchDTO();
         model.addAttribute("newBranch",branch);
-        return "addForm";
+        return "form";
     }
+
+    @PostMapping("/add")
+    public String addBranch(@ModelAttribute("newBranch") BranchDTO branch){
+        branchService.create(branch);
+        return "redirect:/branch/getAll";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBranch(@PathVariable(value="id") Integer id){
+        branchService.delete(id);
+        return "redirect:/branch/getAll";
+    }
+
 
 }

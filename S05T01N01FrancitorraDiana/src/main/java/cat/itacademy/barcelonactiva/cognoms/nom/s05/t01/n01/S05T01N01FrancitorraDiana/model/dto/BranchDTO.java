@@ -6,7 +6,6 @@ import java.util.List;
 
 public class BranchDTO {
 
-
     private Integer pk_BranchID;
     private String branchName;
     private String branchCountry;

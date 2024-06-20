@@ -35,11 +35,6 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public void create(BranchDTO branchDTO){
-        if(branchRepository.findById(branchDTO.getPk_BranchID()).isPresent()){
-            throw new EntityExistsException("Create Sucursal failed: Invalid ID number: "+ branchDTO.getPk_BranchID()+
-                    " ALREADY EXIST in database");
-        }
-
         branchRepository.save(toEntity(branchDTO));
     }
 
