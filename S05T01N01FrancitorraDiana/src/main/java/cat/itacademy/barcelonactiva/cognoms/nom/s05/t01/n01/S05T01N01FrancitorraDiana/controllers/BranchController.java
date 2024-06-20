@@ -21,20 +21,32 @@ public class BranchController {
 
     @GetMapping("/form")
     public String showAddBranchForm(Model model){
-        BranchDTO branch = new BranchDTO();
-        model.addAttribute("newBranch",branch);
+        BranchDTO branchDTO = new BranchDTO();
+        model.addAttribute("newBranch",branchDTO);
         return "form";
     }
 
     @PostMapping("/add")
-    public String addBranch(@ModelAttribute("newBranch") BranchDTO branch){
-        branchService.create(branch);
+    public String addBranch(@ModelAttribute("newBranch") BranchDTO branchDTO){
+        branchService.create(branchDTO);
         return "redirect:/branch/getAll";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteBranch(@PathVariable(value="id") Integer id){
         branchService.delete(id);
+        return "redirect:/branch/getAll";
+    }
+
+    @GetMapping("/update_form/{id}")
+    public String showUpdateBranchForm(@PathVariable(value="id") Integer id, Model model){
+        model.addAttribute("branchToUpdate", branchService.getOne(id));
+        return "update_form";
+    }
+
+    @PostMapping("/update")
+    public String updateBranch(@ModelAttribute("branchToUpdate") BranchDTO branchDTO){
+        branchService.update(branchDTO);
         return "redirect:/branch/getAll";
     }
 
