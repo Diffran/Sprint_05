@@ -30,7 +30,7 @@
             .form-group {
                 margin-bottom: 15px;
             }
-            button, input {
+            button, input , select{
                 width: 100%;
                 margin-bottom: 15px;
             }
@@ -47,11 +47,11 @@
                     <input type="text" id="branchName" th:field="*{branchName}"
                            placeholder="Branch name" class="form-control form-control-lg" required>
                 </div>
-                <div >
-                    <label for="branchCountry">Country</label>
-                    <input type="text" id="branchCountry" th:field="*{branchCountry}"
-                           placeholder="Branch country" class="form-control form-control-lg" required>
-                </div>
+                <label for="branchCountry">Country</label>
+                <select id="branchCountry" th:field="*{branchCountry}" class="form-control form-control-lg" required>
+                    <option value="">Select a country...</option>
+                    <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
+                </select>
                 <button type="submit" class="btn btn-outline-primary">Save</button>
             </form>
         </div>

@@ -48,6 +48,10 @@ public class BranchController {
     @GetMapping("/update_form/{id}")
     public String showUpdateBranchForm(@PathVariable(value="id") Integer id, Model model){
         model.addAttribute("branchToUpdate", branchService.getOne(id));
+
+        List<String> countries = Countries.getAllCountries();
+        model.addAttribute("countries", countries);
+
         return "update_form";
     }
 
