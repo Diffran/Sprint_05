@@ -1,3 +1,6 @@
+ -----------------------------------------------------
+-- Schema flowers
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema flowers
@@ -14,4 +17,6 @@ CREATE TABLE IF NOT EXISTS `flowers`.`flower` (
   `country` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`pk_flowerid`))
 ENGINE = InnoDB;
+
+
 
