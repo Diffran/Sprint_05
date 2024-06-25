@@ -1,5 +1,7 @@
 package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto;
 
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.exceptions.CountryNotFoundException;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.util.Countries;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +37,7 @@ public class FlowerDTO {
     public FlowerDTO(Integer pk_FlowerID, String flowerName, String flowerCountry) {
         this.pk_FlowerID = pk_FlowerID;
         this.flowerName = flowerName;
-        this.flowerCountry = flowerCountry;
+        this.flowerCountry =flowerCountry;
         setFlowerType(this.flowerCountry);
     }
 
@@ -43,6 +45,7 @@ public class FlowerDTO {
         this.flowerType = UE_COUNTRIES.stream()
                 .anyMatch(country -> country.equalsIgnoreCase(flowerCountry)) ? "UE" : "NON UE";
     }
+
 }
 
 

@@ -1,5 +1,8 @@
 package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.domain;
 
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto.FlowerDTO;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.exceptions.CountryNotFoundException;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.util.Countries;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +23,13 @@ public class Flower {
 
     public Flower(String flowerName, String flowerCountry) {
         this.flowerName = flowerName;
-        this.flowerCountry = flowerCountry;
+        this.flowerCountry = validCountry(flowerCountry);
+    }
+    private String validCountry(String country){
+        return Countries.ALL_COUNTRIES.stream()
+                .filter(c -> c.equalsIgnoreCase(country))
+                .findFirst()
+                .orElseThrow(() -> new CountryNotFoundException("Not Valid Country: " + country
+                        + " -PLEASE ADD A VALID COUNTRYY"));
     }
 }
