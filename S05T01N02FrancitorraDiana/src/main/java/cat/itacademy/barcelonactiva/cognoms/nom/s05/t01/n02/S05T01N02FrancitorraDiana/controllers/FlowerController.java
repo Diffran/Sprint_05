@@ -17,30 +17,30 @@ public class FlowerController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<?> addFruit(@RequestBody FlowerDTO flowerDTO){
+    public ResponseEntity<?> addFlower(@RequestBody FlowerDTO flowerDTO){
         flowerService.create(flowerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(flowerDTO);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateFruit(@RequestBody FlowerDTO flowerDTO){
+    public ResponseEntity<?> updateFlower(@RequestBody FlowerDTO flowerDTO){
         flowerService.update(flowerDTO);
         return ResponseEntity.ok().body(flowerDTO);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteFruit(@PathVariable("id") Integer flowerId){
+    public ResponseEntity<?> deleteFlower(@PathVariable("id") Integer flowerId){
         flowerService.delete(flowerId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/getOne/{id}")
-    public ResponseEntity<?> getOneFruit(@PathVariable("id") Integer flowerId){
+    public ResponseEntity<?> getOneFlower(@PathVariable("id") Integer flowerId){
         return ResponseEntity.ok().body(flowerService.getOne(flowerId));
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<FlowerDTO>> getAllFruits(){
+    public ResponseEntity<List<FlowerDTO>> getAllFlowers(){
         return ResponseEntity.ok().body(flowerService.getAll());
     }
 

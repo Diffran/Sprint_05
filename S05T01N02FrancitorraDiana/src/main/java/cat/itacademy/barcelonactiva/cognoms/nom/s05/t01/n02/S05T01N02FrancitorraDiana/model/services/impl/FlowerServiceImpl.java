@@ -36,10 +36,6 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public void create(FlowerDTO flowerDTO){
-        if(flowerRepository.findById(flowerDTO.getPk_FlowerID()).isPresent()){
-            throw new EntityExistsException("Create Sucursal Failed: Invalid ID: "+ flowerDTO.getPk_FlowerID()+
-                    " -> ALREADY EXIST in DataBase");
-        }
         flowerRepository.save(toEntity(flowerDTO));
     }
 

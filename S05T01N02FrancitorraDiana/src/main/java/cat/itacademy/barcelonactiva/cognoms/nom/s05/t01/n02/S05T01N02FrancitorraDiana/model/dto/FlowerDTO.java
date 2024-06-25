@@ -1,13 +1,16 @@
 package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class FlowerDTO {
 
     private Integer pk_FlowerID;
@@ -37,7 +40,7 @@ public class FlowerDTO {
     }
 
     private void setFlowerType(String flowerCountry){
-        this.flowerCountry = UE_COUNTRIES.stream()
+        this.flowerType = UE_COUNTRIES.stream()
                 .anyMatch(country -> country.equalsIgnoreCase(flowerCountry)) ? "UE" : "NON UE";
     }
 }
