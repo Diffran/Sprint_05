@@ -25,7 +25,7 @@ public class Flower {
         this.flowerName = flowerName;
         this.flowerCountry = validCountry(flowerCountry);
     }
-    private String validCountry(String country){
+    public static String validCountry(String country){
         return Countries.ALL_COUNTRIES.stream()
                 .filter(c -> c.equalsIgnoreCase(country))
                 .findFirst()
