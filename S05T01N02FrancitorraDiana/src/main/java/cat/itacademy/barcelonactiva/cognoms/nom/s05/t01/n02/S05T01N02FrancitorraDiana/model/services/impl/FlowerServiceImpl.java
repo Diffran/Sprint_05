@@ -2,8 +2,10 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02Francitorr
 
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.domain.Flower;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto.FlowerDTO;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.exceptions.CountryNotFoundException;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.repository.IFlowerRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.services.FlowerService;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.util.Countries;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
@@ -24,9 +26,10 @@ public class FlowerServiceImpl implements FlowerService {
 
     private Flower toEntity(FlowerDTO flowerDTO){
         if(flowerDTO.getPk_FlowerID()==null){
-            return new Flower(flowerDTO.getFlowerName(), flowerDTO.getFlowerCountry());
+
+            return new Flower(flowerDTO.getFlowerName(), validCountry(flowerDTO.getFlowerCountry()));
         }
-        return new Flower(flowerDTO.getPk_FlowerID(), flowerDTO.getFlowerName(), flowerDTO.getFlowerCountry());
+        return new Flower(flowerDTO.getPk_FlowerID(), flowerDTO.getFlowerName(), validCountry(flowerDTO.getFlowerCountry()));
     }
 
     private FlowerDTO toDTO(Flower flower){
@@ -77,4 +80,11 @@ public class FlowerServiceImpl implements FlowerService {
                 .collect(Collectors.toList());
     }
 
+    private static String validCountry(String country){
+        return Countries.ALL_COUNTRIES.stream()
+                .filter(c -> c.equalsIgnoreCase(country))
+                .findFirst()
+                .orElseThrow(() -> new CountryNotFoundException("Not Valid Country: " + country
+                        + " -PLEASE ADD A VALID COUNTRYY"));
+    }
 }

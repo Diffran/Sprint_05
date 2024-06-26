@@ -23,13 +23,7 @@ public class Flower {
 
     public Flower(String flowerName, String flowerCountry) {
         this.flowerName = flowerName;
-        this.flowerCountry = validCountry(flowerCountry);
+        this.flowerCountry = flowerCountry;
     }
-    public static String validCountry(String country){
-        return Countries.ALL_COUNTRIES.stream()
-                .filter(c -> c.equalsIgnoreCase(country))
-                .findFirst()
-                .orElseThrow(() -> new CountryNotFoundException("Not Valid Country: " + country
-                        + " -PLEASE ADD A VALID COUNTRYY"));
-    }
+
 }
