@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02Francitorr
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto.FlowerDTO;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.services.impl.FlowerServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("flower")
+@Tag(name = "Flower Controller", description = "Endpoints for managing flowers :)")
 public class FlowerController {
     @Autowired
     private FlowerServiceImpl flowerService;
