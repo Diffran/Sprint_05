@@ -14,22 +14,38 @@ public class ClientFlowerServiceImpl implements FlowerService {
     @Autowired
     private WebClient webClient;
     public void create(FlowerDTO flowerDTO){
-
+        webClient
+                .post()
+                .uri("/add")
+                .bodyValue(flowerDTO)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
     public void  update(FlowerDTO flowerDTO){
-
+        webClient
+                .put()
+                .uri("/update")
+                .bodyValue(flowerDTO)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
     public void delete(Integer flowerID){
-
+        webClient
+                .delete()
+                .uri("/delete/{id}", flowerID)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
     public FlowerDTO getOne(Integer flowerID){
-        FlowerDTO flowerDTO = webClient
+        return  webClient
                 .get()
-                .uri("/getOne/{id}")
+                .uri("/getOne/{id}", flowerID)
                 .retrieve()
                 .bodyToMono(FlowerDTO.class)
                 .block();
-        return flowerDTO;
     }
     public List<FlowerDTO> getAll(){
         Mono<List<FlowerDTO>> flowerListMono = webClient
@@ -39,8 +55,6 @@ public class ClientFlowerServiceImpl implements FlowerService {
                 .bodyToFlux(FlowerDTO.class)
                 .collectList();
 
-        List<FlowerDTO> flowerList = flowerListMono.block();
-
-        return  flowerList;
+        return  flowerListMono.block();
     }
 }

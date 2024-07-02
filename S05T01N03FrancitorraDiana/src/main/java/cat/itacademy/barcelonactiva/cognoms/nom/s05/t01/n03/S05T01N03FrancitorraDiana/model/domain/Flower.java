@@ -14,9 +14,4 @@ public class Flower {
     private String flowerName;
     private String flowerCountry;
 
-    public Flower(String flowerName, String flowerCountry) {
-        this.flowerName = flowerName;
-        this.flowerCountry = flowerCountry;
-    }
-
 }
