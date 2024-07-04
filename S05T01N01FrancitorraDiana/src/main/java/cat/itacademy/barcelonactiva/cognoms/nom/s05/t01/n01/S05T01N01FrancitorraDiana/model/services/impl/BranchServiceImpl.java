@@ -2,9 +2,8 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01Francitorr
 
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.domain.Branch;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.dto.BranchDTO;
-import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.repository.IBranchlRepository;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.repository.BranchlRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n01.S05T01N01FrancitorraDiana.model.services.BranchService;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class BranchServiceImpl implements BranchService {
-    private IBranchlRepository branchRepository;
+    private BranchlRepository branchRepository;
 
     @Autowired
-    public BranchServiceImpl(IBranchlRepository branchRepository){
+    public BranchServiceImpl(BranchlRepository branchRepository){
         this.branchRepository =branchRepository;
     }
 
@@ -40,10 +39,9 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public void update(BranchDTO branchDTO) {
-        if(!branchRepository.findById(branchDTO.getPk_BranchID()).isPresent()){
-            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ branchDTO.getPk_BranchID()+
-                    " -> DOESN'T EXIST in DataBase");
-        }
+        branchRepository.findById(branchDTO.getPk_BranchID())
+                .orElseThrow(() -> new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ branchDTO.getPk_BranchID()
+                        +" -> DOESN'T EXIST in DataBase"));
 
         branchRepository.save(toEntity(branchDTO));
     }

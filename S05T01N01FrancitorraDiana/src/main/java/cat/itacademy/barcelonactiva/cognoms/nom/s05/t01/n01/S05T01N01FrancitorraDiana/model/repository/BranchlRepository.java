@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface IBranchlRepository extends JpaRepository<Branch, Integer> {
+public interface BranchlRepository extends JpaRepository<Branch, Integer> {
 }
