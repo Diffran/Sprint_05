@@ -3,10 +3,9 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02Francitorr
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.domain.Flower;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.dto.FlowerDTO;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.exceptions.CountryNotFoundException;
-import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.repository.IFlowerRepository;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.repository.FlowerIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.services.FlowerService;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02FrancitorraDiana.model.util.Countries;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class FlowerServiceImpl implements FlowerService {
-    private IFlowerRepository flowerRepository;
+    private FlowerIRepository flowerRepository;
 
     @Autowired
-    public FlowerServiceImpl(IFlowerRepository flowerRepository) {
+    public FlowerServiceImpl(FlowerIRepository flowerRepository) {
         this.flowerRepository = flowerRepository;
     }
 
@@ -44,10 +43,9 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public void update(FlowerDTO flowerDTO) {
-        if(!flowerRepository.findById(flowerDTO.getPk_FlowerID()).isPresent()){
-            throw new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ flowerDTO.getPk_FlowerID()+
-                    " -> DOESN'T EXIST in DataBase");
-        }
+        flowerRepository.findById(flowerDTO.getPk_FlowerID())
+                .orElseThrow(() -> new EntityNotFoundException("Update Sucursal Failed: Invalid ID: "+ flowerDTO.getPk_FlowerID()
+                        +" -> DOESN'T EXIST in DataBase"));
 
         flowerRepository.save(toEntity(flowerDTO));
     }

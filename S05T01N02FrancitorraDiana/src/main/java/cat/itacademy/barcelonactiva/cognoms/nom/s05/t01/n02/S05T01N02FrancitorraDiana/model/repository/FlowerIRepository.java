@@ -4,8 +4,6 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n02.S05T01N02Francitorra
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface IFlowerRepository extends JpaRepository<Flower, Integer> {
+public interface FlowerIRepository extends JpaRepository<Flower, Integer> {
 }
