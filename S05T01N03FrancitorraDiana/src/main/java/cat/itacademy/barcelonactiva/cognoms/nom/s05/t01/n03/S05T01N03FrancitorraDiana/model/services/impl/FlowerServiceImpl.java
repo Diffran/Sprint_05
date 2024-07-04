@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Service
-public class ClientFlowerServiceImpl implements FlowerService {
+public class FlowerServiceImpl implements FlowerService {
     @Autowired
     private WebClient webClient;
     public void create(FlowerDTO flowerDTO){

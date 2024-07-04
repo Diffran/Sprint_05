@@ -1,7 +1,7 @@
 package cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n03.S05T01N03FrancitorraDiana.controllers;
 
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n03.S05T01N03FrancitorraDiana.model.dto.FlowerDTO;
-import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n03.S05T01N03FrancitorraDiana.model.services.impl.ClientFlowerServiceImpl;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t01.n03.S05T01N03FrancitorraDiana.model.services.impl.FlowerServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name="Flower Client Controller", description="Client endpoint for flower management")
 public class ClientFlowerController {
     @Autowired
-    private ClientFlowerServiceImpl flowerService;
+    private FlowerServiceImpl flowerService;
 
     @PostMapping("/add")
     @Operation(summary = "Add a new flower from client",
