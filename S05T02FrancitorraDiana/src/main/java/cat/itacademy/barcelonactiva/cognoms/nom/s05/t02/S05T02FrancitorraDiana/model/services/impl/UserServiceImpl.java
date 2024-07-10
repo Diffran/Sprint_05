@@ -1,9 +1,12 @@
 package cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.impl;
 
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.mappers.UserMapper;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.domain.User;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.dto.UserDTO;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.UserIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +17,40 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserIRepository userIRepository;
-    private User toEntity(UserDTO userDTO){
-        if(userDTO.getId()==null){
-            return new User(userDTO.getEmail(),userDTO.getPassword());
-        }
-        return new User(userDTO.getId(),userDTO.getEmail(), userDTO.getPassword(), userDTO.getDate());
+    public void create(UserDTO userDTO){
+        userDTO.setId(null);
+        userIRepository.save(UserMapper.toEntity(userDTO));
     }
 
-    private UserDTO toDTO(User user){
-        return new UserDTO(user.getId(), user.getEmail(), user.getPassword(),user.getDate());
+    public void update(UserDTO userDTO){
+        userIRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Update User Failed: Invalid ID: "+ userDTO.getId()
+                        +" -> DOESN'T EXIST in DataBase"));
+
+        userIRepository.save(UserMapper.toEntity(userDTO));
     }
-    public void create(UserDTO userDTO){
-        userIRepository.save(toEntity(userDTO));
+
+    public void delete(String userID){
+        if(!userIRepository.findById(userID).isPresent()){
+            throw new EntityNotFoundException("Delete User Failed: Invalid ID: "+ userID+
+                    " -> DOESN'T EXIST in DataBase");
+        }
+
+        userIRepository.deleteById(userID);
+    }
+
+    public UserDTO getOne(String userID){
+        User user = userIRepository.findById(userID)
+                .orElseThrow(() -> new NoResultException("Get One User Failed: Invalid ID: "+ userID
+                        +" -> DOESN'T EXIST in DataBase"));
+
+        return UserMapper.toDTO(user);
     }
 
     public List<UserDTO> getAll(){
         List<User> userList = userIRepository.findAll();
         return userList.stream()
-                .map(this::toDTO)
+                .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }
