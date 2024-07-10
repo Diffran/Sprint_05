@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "user")
-public class User {
+public class User {//TODO: implements UserDetails, modificar coses perque funcioni
     @Id
     private String id;
     @Indexed(unique = true)
