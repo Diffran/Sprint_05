@@ -6,6 +6,7 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.m
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.dto.UserDTO;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.UserIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.AuthenticationService;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.JwtService;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private UserIRepository userIRepository;
-    private UserService userService;
+    private JwtService jwtService;
 
     @Override
     public JwtAuthenticationResponse signUp(SignRequest request) {
@@ -24,12 +25,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .ifPresent(user -> {
                     throw new EntityExistsException("Auth User failed: '"+user.getEmail()+"' -> ALREADY EXIST in DataBase" );
                 });
-        UserDTO user = UserDTO.builder()
+        User user = User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
 
-        userService.create(user);//aixi em fa la date i el rol automatic, per aixo service i o repository
+        userIRepository.save(user);
+
+        return JwtAuthenticationResponse.builder()
+                .token(jwtService.getToken(user))
+                .build();
     }
 
     @Override
