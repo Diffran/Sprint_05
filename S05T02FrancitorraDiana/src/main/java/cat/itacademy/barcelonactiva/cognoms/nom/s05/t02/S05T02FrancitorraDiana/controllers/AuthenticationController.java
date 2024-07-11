@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.dao.request.SignRequest;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.dao.response.JwtAuthenticationResponse;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.AuthenticationService;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private AuthenticationService authenticationService;
+    private UserService userService;
 
     @PostMapping("/signin")
-    public ResponseEntity<String> signin(@RequestBody SignRequest request){//TODO: canviar el String per JwtAuthenticationResponse
-        //TODO: return ResponseEntity.ok(authenticationService.signup(request));
-        return ResponseEntity.ok().body("hola?");
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody SignRequest request){//TODO: canviar el String per JwtAuthenticationResponse
+        return ResponseEntity.ok(authenticationService.signup(request));
+
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignRequest request){//TODO: canviar el String per JwtAuthenticationResponse
+    public ResponseEntity<JwtAuthenticationResponse> register(@RequestBody SignRequest request){//TODO: canviar el String per JwtAuthenticationResponse
         //TODO: return ResponseEntity.ok(authenticationService.signin(request));
-        return ResponseEntity.ok().body("adeu?");
+
     }
 }
