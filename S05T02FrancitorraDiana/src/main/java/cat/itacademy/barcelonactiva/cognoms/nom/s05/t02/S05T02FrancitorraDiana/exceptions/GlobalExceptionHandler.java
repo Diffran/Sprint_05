@@ -28,6 +28,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorMessage> IllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.CONFLICT.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> EntityNotFoundException(EntityNotFoundException ex, WebRequest request){

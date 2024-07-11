@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    @Value("${security.jwt.secret-key}")
+    @Value("${token.signing.key}")
     public String SECRET_KEY;
     public String getToken(UserDetails userDetails){
         return getToken(new HashMap<>(), userDetails);
@@ -36,7 +36,7 @@ public class JwtServiceImpl implements JwtService {
         byte[] keybites= Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keybites);
     }
-    String getEmail(String token);
-    boolean isTokenValid(String token, UserDetails userDetails);
+    //String getEmail(String token);
+    //boolean isTokenValid(String token, UserDetails userDetails);
 
 }
