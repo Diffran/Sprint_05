@@ -23,7 +23,7 @@ public class PlayerController {
     private PlayerService playerService;
     @PostMapping
     public ResponseEntity<?> addPlayer(@RequestBody PlayerDTO playerDTO, Principal principal){
-        AppValidations.verifyUserAccess(principal, null);//TODO: aixo sha de crear automaticament, només te access els admins
+        AppValidations.verifyUserAccess(principal, null);
 
         playerService.create(playerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(playerDTO);

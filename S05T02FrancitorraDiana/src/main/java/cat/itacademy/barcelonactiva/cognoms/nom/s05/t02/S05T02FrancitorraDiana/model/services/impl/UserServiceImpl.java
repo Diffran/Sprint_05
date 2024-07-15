@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.mappers.UserMapper;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.domain.User;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.dto.UserDTO;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.PlayerIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.UserIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserIRepository userIRepository;
+    private final PlayerIRepository playerIRepository;
+
     public void create(UserDTO userDTO){
         userDTO.setId(null);
         userIRepository.save(UserMapper.toEntity(userDTO));
@@ -42,6 +45,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userIRepository.deleteById(userID);
+        playerIRepository.deleteById(userID);
     }
 
     public UserDTO getOne(String userID){
