@@ -7,16 +7,21 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.m
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserIRepository userIRepository;
+
+    private final UserIRepository userIRepository;
     public void create(UserDTO userDTO){
         userDTO.setId(null);
         userIRepository.save(UserMapper.toEntity(userDTO));
@@ -52,5 +57,16 @@ public class UserServiceImpl implements UserService {
         return userList.stream()
                 .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userIRepository.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+            }
+        };
     }
 }

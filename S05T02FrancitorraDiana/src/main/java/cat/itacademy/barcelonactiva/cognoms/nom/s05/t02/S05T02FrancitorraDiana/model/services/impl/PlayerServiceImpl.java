@@ -6,8 +6,7 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.m
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.PlayerIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.UserIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.PlayerService;
-import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.utils.validations.PlayerValidation;
-import jakarta.persistence.EntityExistsException;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.utils.validations.AppValidations;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,14 @@ public class PlayerServiceImpl implements PlayerService {
     private UserIRepository userIRepository;
 
     public void create(PlayerDTO playerDTO){
-        PlayerValidation.nickNameExist(playerIRepository,playerDTO.getNickname());
-        PlayerValidation.userExist(playerIRepository, userIRepository, playerDTO.getPlayer_id());
+        AppValidations.nickNameExist(playerIRepository,playerDTO.getNickname());
+        AppValidations.userExist(playerIRepository, userIRepository, playerDTO.getPlayer_id());
         playerIRepository.save(PlayerMapper.toEntity(playerDTO));
     }
 
     public void update(PlayerDTO playerDTO){
         PlayerDTO playerToUpdate = getOne(playerDTO.getPlayer_id());
-        PlayerValidation.nickNameExist(playerIRepository,playerDTO.getNickname());
+        AppValidations.nickNameExist(playerIRepository,playerDTO.getNickname());
         playerToUpdate.setNickname(playerDTO.getNickname());
         playerIRepository.save(PlayerMapper.toEntity(playerToUpdate));
     }

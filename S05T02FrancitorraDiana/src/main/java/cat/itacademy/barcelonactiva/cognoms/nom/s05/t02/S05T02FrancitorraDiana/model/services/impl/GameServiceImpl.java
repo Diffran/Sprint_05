@@ -76,7 +76,7 @@ public class GameServiceImpl implements GameService {
     }
     public List<GameDTO> getAllPlayer(String playerID){
         Player player = playerIRepository.findById(playerID)
-                .orElseThrow(() -> new EntityNotFoundException("Delete all failed -> Player with ID '" + playerID +
+                .orElseThrow(() -> new EntityNotFoundException("Get all Games failed -> Player with ID '" + playerID +
                         "' DOESN'T EXIST in DataBase"));
 
         return player.getGames().stream()

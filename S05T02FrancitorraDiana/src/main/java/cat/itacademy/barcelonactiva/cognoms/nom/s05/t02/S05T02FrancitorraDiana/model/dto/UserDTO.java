@@ -13,10 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class UserDTO {
     private String id;
     @NotNull
-    @Email
+    @Email(message = "Must be a valid email address")
     private String email;
     @NotNull
     private String password;

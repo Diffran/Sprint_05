@@ -4,6 +4,8 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.u
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +29,11 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     private String id;
+    @Email
+    @NotNull
     @Indexed(unique = true)
     private String email;
+    @NotNull
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
