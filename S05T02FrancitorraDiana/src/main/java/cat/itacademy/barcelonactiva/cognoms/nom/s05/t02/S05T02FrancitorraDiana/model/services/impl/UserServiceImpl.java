@@ -6,6 +6,7 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.m
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.PlayerIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.repository.UserIRepository;
 import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.model.services.UserService;
+import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.utils.Role;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +26,30 @@ public class UserServiceImpl implements UserService {
     private final UserIRepository userIRepository;
     private final PlayerIRepository playerIRepository;
 
-    public void create(UserDTO userDTO){
+    public UserDTO create(UserDTO userDTO){
         userDTO.setId(null);
-        userIRepository.save(UserMapper.toEntity(userDTO));
+        User  user = UserMapper.toEntity(userDTO);
+        userIRepository.save(user);
+
+        //el primer user sempre es admin
+        if(userIRepository.findAll().size()==1){
+            user.setRole(Role.ADMIN);
+            userIRepository.save(user);
+        }
+
+        return UserMapper.toDTO(user);
     }
 
-    public void update(UserDTO userDTO){
+    public UserDTO update(UserDTO userDTO){
         userIRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Update User Failed: Invalid ID: "+ userDTO.getId()
                         +" -> DOESN'T EXIST in DataBase"));
 
         userIRepository.save(UserMapper.toEntity(userDTO));
+        return userDTO;
     }
 
-    public void delete(String userID){
+    public String delete(String userID){
         if(!userIRepository.findById(userID).isPresent()){
             throw new EntityNotFoundException("Delete User Failed: Invalid ID: "+ userID+
                     " -> DOESN'T EXIST in DataBase");
@@ -46,6 +57,8 @@ public class UserServiceImpl implements UserService {
 
         userIRepository.deleteById(userID);
         playerIRepository.deleteById(userID);
+
+        return "User with ID: "+userID+" has been successfully DELETED.";
     }
 
     public UserDTO getOne(String userID){

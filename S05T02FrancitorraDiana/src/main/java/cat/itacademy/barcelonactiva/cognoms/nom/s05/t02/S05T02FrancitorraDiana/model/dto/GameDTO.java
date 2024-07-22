@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameDTO {
+    @JsonIgnore
     private Integer pk_GameID;
     private int dice1;
     private int dice2;

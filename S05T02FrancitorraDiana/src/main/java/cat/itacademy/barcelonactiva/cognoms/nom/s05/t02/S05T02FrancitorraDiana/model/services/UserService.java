@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserService {
-    void create(UserDTO userDTO);
+    UserDTO create(UserDTO userDTO);
     List<UserDTO> getAll();
-    void update(UserDTO userDTO);
-    void delete(String userID);
+    UserDTO update(UserDTO userDTO);
+    String delete(String userID);
     UserDTO getOne(String userID);
     UserDetailsService userDetailsService();
 

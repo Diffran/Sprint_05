@@ -18,9 +18,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    @Value("${token.signing.key}")
+    @Value("${app.jwtSecret}")
     private String secretKey;
-
     @Override
     public String getToken(UserDetails userDetails){
         return getToken(new HashMap<>(), userDetails);

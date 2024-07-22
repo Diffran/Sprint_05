@@ -23,24 +23,27 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private UserIRepository userIRepository;
 
-    public void create(PlayerDTO playerDTO){
+    public PlayerDTO create(PlayerDTO playerDTO){
         AppValidations.nickNameExist(playerIRepository,playerDTO.getNickname());
         AppValidations.userExist(playerIRepository, userIRepository, playerDTO.getPlayer_id());
-        playerIRepository.save(PlayerMapper.toEntity(playerDTO));
+
+        return PlayerMapper.toDTO(playerIRepository.save(PlayerMapper.toEntity(playerDTO)));
     }
 
-    public void update(PlayerDTO playerDTO){
+    public PlayerDTO update(PlayerDTO playerDTO){
         PlayerDTO playerToUpdate = getOne(playerDTO.getPlayer_id());
         AppValidations.nickNameExist(playerIRepository,playerDTO.getNickname());
         playerToUpdate.setNickname(playerDTO.getNickname());
-        playerIRepository.save(PlayerMapper.toEntity(playerToUpdate));
+
+        return PlayerMapper.toDTO(playerIRepository.save(PlayerMapper.toEntity(playerToUpdate)));
     }
-    public void delete(String playerID){
+    public String delete(String playerID){
         if(!playerIRepository.findById(playerID).isPresent()){
             throw new EntityNotFoundException("DELETE PLAYER failed: '"+playerID+"' -> DOESN'T EXIST in DataBase");
         }
 
         playerIRepository.deleteById(playerID);
+        return "Player with ID: "+playerID+" has been successfully DELETED.";
     }
     public List<PlayerDTO> getAll(){
         List<Player> playerList =  playerIRepository.findAll();

@@ -25,24 +25,21 @@ public class PlayerController {
     public ResponseEntity<?> addPlayer(@RequestBody PlayerDTO playerDTO, Principal principal){
         AppValidations.verifyUserAccess(principal, null);
 
-        playerService.create(playerDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(playerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(playerService.create(playerDTO));
     }
 
     @PutMapping
     public ResponseEntity<?> updatePlayer(@RequestBody PlayerDTO playerDTO, Principal principal){
         AppValidations.verifyUserAccess(principal, playerDTO.getPlayer_id());
 
-        playerService.update(playerDTO);
-        return ResponseEntity.ok().body(playerDTO);
+        return ResponseEntity.ok().body(playerService.update(playerDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePlayer(@PathVariable("id") String playerID, Principal principal){
         AppValidations.verifyUserAccess(principal, null);
 
-        playerService.delete(playerID);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(playerService.delete(playerID));
     }
 
     @GetMapping("/{id}")

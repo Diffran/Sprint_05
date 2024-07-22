@@ -57,13 +57,15 @@ public class GameServiceImpl implements GameService {
     }
 
     @Transactional
-    public void deleteAll(String playerID){
+    public String deleteAll(String playerID){
         Player player = playerIRepository.findById(playerID)
                 .orElseThrow(() -> new EntityNotFoundException("Delete all failed -> Player with ID '" + playerID +
                         "' DOESN'T EXIST in DataBase"));
-        gameIRepository.deleteByPlayer_PlayerId(playerID);
 
+        gameIRepository.deleteByPlayer_PlayerId(playerID);
         player.setWinrate(0);
+
+        return "all games from: "+playerID+" have been successfully DELETED";
     }
 
 

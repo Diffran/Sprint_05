@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GameService {
     GameDTO roll(String playerID);
-    void deleteAll(String playerID);
+    String deleteAll(String playerID);
 
     List<GameDTO> getAll();
     List<GameDTO> getAllPlayer(String playerID);

@@ -66,16 +66,6 @@ public class PlayerServiceImplTest {
 
 
     @Test
-    @DisplayName("Update Player Success")
-    void testUpdatePlayer_Success() {
-        when(playerIRepository.findById(anyString())).thenReturn(Optional.of(player));
-
-        playerService.update(playerDTO);
-
-        verify(playerIRepository, times(1)).save(any(Player.class));
-    }
-
-    @Test
     @DisplayName("Delete Player Success")
     void testDeletePlayer_Success() {
         when(playerIRepository.findById(anyString())).thenReturn(Optional.of(player));

@@ -5,10 +5,10 @@ import cat.itacademy.barcelonactiva.cognoms.nom.s05.t02.S05T02FrancitorraDiana.m
 import java.util.List;
 
 public interface PlayerService {
-    void create(PlayerDTO playerDTO);
+    PlayerDTO create(PlayerDTO playerDTO);
     List<PlayerDTO> getAll();
-    void update(PlayerDTO playerDTO);
-    void delete(String playerID);
+    PlayerDTO update(PlayerDTO playerDTO);
+    String delete(String playerID);
     PlayerDTO getOne(String playerID);
     double getAverageWinrate();
     PlayerDTO getLoser();

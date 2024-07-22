@@ -28,8 +28,7 @@ public class UserController {
     public ResponseEntity<?> addUser(@Valid @RequestBody UserDTO userDTO, Principal principal){
         AppValidations.verifyUserAccess(principal,null);
 
-        userService.create(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userDTO));
     }
 
 
@@ -43,17 +42,15 @@ public class UserController {
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable("id") String userID, Principal principal){
         AppValidations.verifyUserAccess(principal,null);
-
-        userService.delete(userID);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userService.delete(userID));
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@Valid @RequestBody UserDTO userDTO, Principal principal){
         AppValidations.verifyUserAccess(principal,null);
 
-        userService.update(userDTO);
-        return ResponseEntity.ok().body(userDTO);
+
+        return ResponseEntity.ok().body(userService.update(userDTO));
     }
 
     @GetMapping("/{id}/getOne")

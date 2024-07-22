@@ -30,9 +30,7 @@ public class GameController {
     @DeleteMapping("/{id}/games")
     public ResponseEntity<String> deleteAllGames(@PathVariable("id") String playerID, Principal principal){
         AppValidations.verifyUserAccess(principal, playerID);
-
-        gameService.deleteAll(playerID);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(gameService.deleteAll(playerID));
     }
 
     @GetMapping("/{id}/games")
